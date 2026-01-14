@@ -75,7 +75,20 @@ router.post("/", (req, res) => {
 });
 
 router.put("/:id", (req, res) => {
-  res.send(`Update car ${req.params.id}`);
+  const id = Number(req.params.id);
+
+  const car = cars.find((car) => car.id === id);
+
+  if (!car) return res.status(404).send("Car not found");
+
+  const { make, model, year, price } = req.body;
+
+  if (make) car.make = make;
+  if (model) car.model = model;
+  if (year) car.year = Number(year);
+  if (price) car.price = Number(price);
+
+  res.json(car);
 });
 
 router.delete("/:id", (req, res) => {
