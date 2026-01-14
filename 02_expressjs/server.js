@@ -43,7 +43,17 @@ app.get("/", (req, res) => {
 });
 
 router.get("/", (req, res) => {
-  res.send("All cars");
+  res.json(cars);
+});
+
+router.get("/:id", (req, res) => {
+  const id = Number(req.params.id);
+
+  const car = cars.find((car) => car.id === id);
+
+  if (!car) return res.status(404).send("Car not found");
+
+  res.json(car);
 });
 
 router.post("/", (req, res) => {
@@ -58,11 +68,7 @@ router.delete("/:id", (req, res) => {
   res.send(`Delete car ${req.params.id}`);
 });
 
-router.get("/:id", (req, res) => {
-  res.send(`Get car ${req.params.id}`);
-});
-
-app.use("/api/v1", router);
+app.use("/api/v1/cars", router);
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
