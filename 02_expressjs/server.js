@@ -5,6 +5,37 @@ const port = 3000;
 
 const router = express.Router();
 
+let cars = [
+  {
+    id: 1,
+    make: "Honda",
+    model: "Civic",
+    year: 2020,
+    price: 25000,
+  },
+  {
+    id: 2,
+    make: "Toyota",
+    model: "Corolla",
+    year: 2021,
+    price: 30000,
+  },
+  {
+    id: 3,
+    make: "Ford",
+    model: "Mustang",
+    year: 2022,
+    price: 35000,
+  },
+  {
+    id: 4,
+    make: "Chevrolet",
+    model: "Camaro",
+    year: 2023,
+    price: 40000,
+  },
+];
+
 app.get("/", (req, res) => {
   res.send("Hello from the Express server");
 });
