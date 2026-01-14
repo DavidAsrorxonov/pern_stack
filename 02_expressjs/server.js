@@ -60,7 +60,7 @@ router.post("/", (req, res) => {
   const { make, model, year, price } = req.body;
 
   if (!make || !model || !year || !price)
-    return res.status(400).send("All fields are required");
+    return res.status(400).json({ error: "Missing required fields" });
 
   const newCar = {
     id: cars.length + 1,
