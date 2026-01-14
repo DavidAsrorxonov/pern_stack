@@ -92,7 +92,15 @@ router.put("/:id", (req, res) => {
 });
 
 router.delete("/:id", (req, res) => {
-  res.send(`Delete car ${req.params.id}`);
+  const id = Number(req.params.id);
+
+  const carIndex = cars.findIndex((car) => car.id === id);
+
+  if (carIndex === -1) return res.status(404).send("Car not found");
+
+  const deleted = cars.splice(carIndex, 1)[0];
+
+  res.json(deleted);
 });
 
 app.use("/api/v1/cars", router);
