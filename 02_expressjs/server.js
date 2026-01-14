@@ -57,7 +57,21 @@ router.get("/:id", (req, res) => {
 });
 
 router.post("/", (req, res) => {
-  res.send("New car");
+  const { make, model, year, price } = req.body;
+
+  if (!make || !model || !year || !price)
+    return res.status(400).send("All fields are required");
+
+  const newCar = {
+    id: cars.length + 1,
+    make,
+    model,
+    year: Number(year),
+    price: Number(price),
+  };
+
+  cars.push(newCar);
+  res.status(201).json(newCar);
 });
 
 router.put("/:id", (req, res) => {
