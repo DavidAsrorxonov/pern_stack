@@ -1,6 +1,7 @@
 import express from "express";
 import { db } from "./db.js";
 import { cars } from "./schema.js";
+import { eq } from "drizzle-orm";
 
 const app = express();
 const port = 3000;
@@ -27,15 +28,15 @@ router.get("/", async (req, res) => {
   res.json(allCars);
 });
 
-// router.get("/:id", (req, res) => {
-//   const id = Number(req.params.id);
+router.get("/:id", async (req, res) => {
+  const id = Number(req.params.id);
 
-//   const car = cars.find((car) => car.id === id);
+  const car = await db.select().from(cars).where(eq(cars.id, id));
 
-//   if (!car) return res.status(404).send("Car not found");
+  if (!car || car.length === 0) return res.status(404).send("Car not found");
 
-//   res.json(car);
-// });
+  res.json(car);
+});
 
 router.post("/", async (req, res) => {
   const { make, model, year, price } = req.body;
